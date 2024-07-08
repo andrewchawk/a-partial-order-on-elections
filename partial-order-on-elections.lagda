@@ -115,8 +115,8 @@ Real = {!!}
 importance : Election -> Real
 importance = {!!}
 
-_>_ : Rel Real Level.zero
-_>_ = {!!}
+_<_ : Rel Real Level.zero
+_<_ = {!!}
 
 _≈_ : Rel Real Level.zero
 _≈_ = {!!}
