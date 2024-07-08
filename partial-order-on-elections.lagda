@@ -61,17 +61,17 @@ Election : Set
     \item Good for further definitions
   \end{itemize}
 \begin{code}
-Candidate : Election -> Set
+Candidate : Set
 \end{code}
 \end{slide}
 
 \begin{slide}{What Constitutes an Election?}
 \begin{code}
-Election = {!!}
+Election = List Candidate
 \end{code}
 \end{slide}
 
-\begin{slide}{What Constitutes a Candidate of an Election?}
+\begin{slide}{But What Constitutes a Candidate of an Election?}
 \begin{code}
 Candidate = {!!}
 \end{code}
@@ -91,14 +91,13 @@ Candidate = {!!}
 \end{itemize}
 \end{slide}
 
-
 \begin{code}
-allInvolvedCandidates : (e : Election) -> List (Candidate e)
+allInvolvedCandidates : Election -> List Candidate
 allInvolvedCandidates = {!!}
 \end{code}
 
 \begin{code}
-candidateEquality : {e : Election} -> Rel (Candidate e) Level.zero
+candidateEquality : Rel Candidate Level.zero
 candidateEquality = {!!}
 \end{code}
 
@@ -127,10 +126,10 @@ _≈_ = {!!}
 \begin{code}
 choices-between-identical-candidates-are-of-equal-importance :
   (e1 e2 : Election) ->
-  AllList.All (\ c1 -> AllList.All (candidateEquality {e1} c1)
+  AllList.All (\ c1 -> AllList.All (candidateEquality c1)
                                    (allInvolvedCandidates e1))
               (allInvolvedCandidates e1) ->
-  AllList.All (\ c1 -> AllList.All (candidateEquality {e2} c1)
+  AllList.All (\ c1 -> AllList.All (candidateEquality c1)
                                    (allInvolvedCandidates e2))
               (allInvolvedCandidates e2) ->
   importance e1 ≈ importance e2
