@@ -41,8 +41,10 @@ Extensively using Agda, the author presents a method of not-quite-programmatical
 \end{itemize}
 \end{slide}
 
-\begin{slide}{Agda Imports}
+\begin{slide}{Agda Imports and Such}
 \begin{code}
+{-# OPTIONS --safe #-}
+
 open import Function
 open import Data.List
 open import Relation.Binary
