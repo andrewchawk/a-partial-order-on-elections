@@ -93,7 +93,7 @@ Real0 = Σ Real (\ r -> 0Real < r ⊎ r ≈ 0Real)
 
 -- | Add positive sign
 pos : Real0 -> Real
-pos = {!!}
+pos = proj₁
 \end{code}
 
 \begin{itemize}
