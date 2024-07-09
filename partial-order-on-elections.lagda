@@ -49,6 +49,8 @@ open import Relation.Binary
 open import Relation.Binary.PropositionalEquality
 open import Data.Nat using (ℕ)
 open import Data.Vec using (Vec)
+open import Data.Product
+open import Data.Sum
 
 import Level
 import Data.List.Relation.Unary.All as AllList
@@ -58,7 +60,7 @@ import Relation.Binary.PropositionalEquality as PropEqualityProps
 
 \begin{slide}{Cop-Out ``Definitions'' for Real Numbers}
 \begin{code}
--- Real number type
+-- Non-negative real number type
 Real : Set
 Real = {!!}
 
@@ -69,7 +71,37 @@ _<_ = {!!}
 -- | Equality relation -- real number equality is hairy
 _≈_ : Rel Real Level.zero
 _≈_ = {!!}
+
+-- | Additive identity
+0Real : Real
+0Real = {!!}
 \end{code}
+\end{slide}
+
+\begin{slide}{Properties of Real Numbers}
+\begin{code}
+≈-reflexivity : {x : Real} -> x ≈ x
+≈-reflexivity = {!!}
+\end{code}
+\end{slide}
+
+\begin{slide}{Nonnegative Real Numbers}
+\begin{code}
+-- | Nonnegative real number type
+Real0 : Set
+Real0 = Σ Real (\ r -> 0Real < r ⊎ r ≈ 0Real)
+
+-- | Add positive sign
+pos : Real0 -> Real
+pos = {!!}
+\end{code}
+
+\begin{itemize}
+  \item Will become important later
+  \begin{itemize}
+    \item Barely started
+  \end{itemize}
+\end{itemize}
 \end{slide}
 
 \section{Base Types}
@@ -93,12 +125,6 @@ Candidate : ℕ -> Set
 \begin{code}
 Election {n} = List (Candidate n)
 \end{code}
-\end{slide}
-
-\begin{slide}{But What Constitutes a Candidate of an Election?}
-\begin{itemize}
-  \item This question is mad hairy!
-\end{itemize}
 \end{slide}
 
 \section{The Election Importance Relation}
@@ -132,7 +158,7 @@ _≤I_ : {n : ℕ} -> Rel (Election {n}) Level.zero
 
 \begin{slide}{What is Election Importance?}
 \begin{code}
-importance : {n : ℕ} -> Election {n} -> Real
+importance : {n : ℕ} -> Election {n} -> Real0
 \end{code}
 
 \begin{itemize}
@@ -181,7 +207,7 @@ Candidate n = Vec Real n
 
 \begin{slide}{The Candidate Difference Function}
 \begin{code}
-candidateDifference : {n : ℕ} -> Candidate n -> Candidate n -> Real
+candidateDifference : {n : ℕ} -> Candidate n -> Candidate n -> Real0
 candidateDifference = {!!}
 \end{code}
 
@@ -192,7 +218,7 @@ candidateDifference = {!!}
 
 \begin{code}
 candidateEquality : {n : ℕ} -> Rel (Candidate n) Level.zero
-candidateEquality c1 c2 = candidateDifference c1 c2 ≈ {!!}
+candidateEquality c1 c2 = pos (candidateDifference c1 c2) ≈ 0Real
 \end{code}
 
 \begin{code}
@@ -212,6 +238,17 @@ dumbPartialOrder1 = record
 importance = {!!}
 \end{code}
 
+\begin{slide}{Any Election with No Candidates is Perfectly Unimportant}
+\begin{code}
+null-elections-suck :
+  {n : ℕ} ->
+  (e : Election {n}) ->
+  length e ≡ 0 ->
+  pos (importance e) ≈ 0Real
+null-elections-suck = {!!}
+\end{code}
+\end{slide}
+
 \begin{slide}{Any Election with a Single Effective Candidate is of a Single Importance}
 \begin{code}
 choices-between-identical-candidates-are-of-equal-importance :
@@ -223,11 +260,10 @@ choices-between-identical-candidates-are-of-equal-importance :
   AllList.All (\ c1 -> AllList.All (candidateEquality c1)
                                    (allInvolvedCandidates e2))
               (allInvolvedCandidates e2) ->
-  importance e1 ≈ importance e2
+  pos (importance e1) ≈ pos (importance e2)
 choices-between-identical-candidates-are-of-equal-importance =
   {!!}
 
 _≤I_ = {!!}
 \end{code}
 \end{slide}
-\end{code}
