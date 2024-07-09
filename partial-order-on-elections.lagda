@@ -41,7 +41,7 @@ import Relation.Binary.PropositionalEquality as PropEqualityProps
     \item ``Sure, all elections are \emph{equally important}.
     \item Speaker is a mathematician
     \begin{itemize}
-      \item ``Hmm, fundamentally, what \emph{am} I trying to say?  How can I prove to myself that some elections are mort important?''
+      \item ``Hmm, fundamentally, what \emph{am} I trying to say?  How can I prove to myself that some elections are more important?''
       \item ``Hey, this problem is actually pretty abstract!''
     \end{itemize}
   \end{itemize}
