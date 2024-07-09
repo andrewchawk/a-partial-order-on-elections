@@ -127,6 +127,17 @@ Candidate : ℕ -> Set
 \begin{code}
 Election {n} = List (Candidate n)
 \end{code}
+
+\begin{itemize}
+  \item Assumptions
+  \begin{itemize}
+    \item Candidates are only chosen from a predetermined list
+    \begin{itemize}
+      \item Write-ins are forbidden
+      \item Picking anything else is unlikely, anyway
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
 \end{slide}
 
 \section{The Election Importance Relation}
@@ -203,6 +214,10 @@ Candidate n = Vec Real n
     \begin{itemize}
       \item Subjective?
     \end{itemize}
+  \end{itemize}
+  \item \AgdaDatatype{Vec} ensures same number of attributes for all candidates in election
+  \begin{itemize}
+    \item Still user's responsibility to \emph{match} the attributes
   \end{itemize}
 \end{itemize}
 \end{slide}
