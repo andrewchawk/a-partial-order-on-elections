@@ -92,6 +92,8 @@ open import Data.Nat using (ℕ)
 open import Data.Vec using (Vec)
 open import Data.Product
 open import Data.Sum
+open import Algebra
+open import Relation.Nullary
 
 import Level
 import Data.List.Relation.Unary.All as AllList
@@ -101,28 +103,47 @@ import Relation.Binary.PropositionalEquality as PropEqualityProps
 
 \begin{frame}{Cop-Out ``Definitions'' for Real Numbers}
 \begin{code}
--- Non-negative real number type
+-- Real number type
 Real : Set
 Real = {!!}
-
--- | Less-than relation
-_<_ : Rel Real Level.zero
-_<_ = {!!}
-
--- | Equality relation -- real number equality is hairy
-_≈_ : Rel Real Level.zero
-_≈_ = {!!}
 
 -- | Additive identity
 0Real : Real
 0Real = {!!}
+
+-- | Less-than-or-equal-to relation
+_≤_ : Rel Real Level.zero
+x ≤ y = {!!}
+
+-- | Equality relation
+_≈_ : Rel Real Level.zero
+x ≈ y = x ≤ y × y ≤ x
+
+-- | Less-than relation
+_<_ : Rel Real Level.zero
+x < y = x ≤ y × ¬ (y ≈ x)
+\end{code}
+\end{frame}
+
+\begin{frame}{More Cop-Out ``Definitions''}
+\begin{code}
+-- | Sum operation
+_+_ : Op₂ Real
+_+_ = {!!}
+
+-- | Exponentiation operation
+_^_ : Op₂ Real
+_^_ = {!!}
 \end{code}
 \end{frame}
 
 \begin{frame}{Properties of Real Numbers}
 \begin{code}
-≈-reflexivity : {x : Real} -> x ≈ x
-≈-reflexivity = {!!}
+≈-equiv : IsEquivalence _≈_
+≈-equiv = {!!}
+
+≤-partialOrder : IsPartialOrder _≈_ _≤_
+≤-partialOrder = {!!}
 \end{code}
 \end{frame}
 
@@ -130,7 +151,7 @@ _≈_ = {!!}
 \begin{code}
 -- | Nonnegative real number type
 Real0 : Set
-Real0 = Σ Real (\ r -> 0Real < r ⊎ r ≈ 0Real)
+Real0 = Σ Real (\ r -> 0Real ≤ r)
 
 -- | Add positive sign
 pos : Real0 -> Real
@@ -271,6 +292,38 @@ Candidate n = Vec Real n
     \item Still user's responsibility to \emph{match} the attributes
   \end{itemize}
 \end{itemize}
+\end{frame}
+
+\subsubsection{Candidate Functions}
+
+\begin{frame}{The Candidate Radicality Function}
+\begin{code}
+candidateRadicality : {n : ℕ} -> Candidate n -> Real0
+candidateRadicality =
+  sqrt ∘ Data.Vec.foldr _ _+'_ 0Real0 ∘ Data.Vec.map square
+\end{code}
+
+\begin{itemize}
+  \item Really just absolute value
+\end{itemize}
+\end{frame}
+
+\begin{frame}{The \emph{Rest of} the Candidate Radicality Function}
+\begin{code}
+  where
+  0Real0 =
+    _,_ 0Real
+        (IsPreorder.reflexive ≤-preorder
+                              {0Real} {0Real}
+                              (IsEquivalence.refl ≈-equiv
+                                                  {0Real}))
+    where ≤-preorder = IsPartialOrder.isPreorder ≤-partialOrder
+  square : Real -> Real0
+  square = \ x -> (x ^ {- 2 -} {!!}) , {!!}
+  sqrt : Real0 -> Real0
+  sqrt (x , grt) = (x ^ {- 1/2 -} {!!}) , {!!}
+  _+'_ = {!!}
+\end{code}
 \end{frame}
 
 \begin{frame}{The Candidate Difference Function}
