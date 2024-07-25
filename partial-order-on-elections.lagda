@@ -254,9 +254,6 @@ importance : {n : ℕ} -> Election {n} -> Real0
   \item Maximum difference between candidates in the candidate pool
   \begin{itemize}
     \item More formally, the difference between candidates \(c\) and \(d\) in the candidate pool such that for any other given candidates \(e\) and \(f\) in the same candidate pool, the difference between \(e\) and \(f\) is less than or equal to the difference between \(c\) and \(d\)
-    \begin{itemize}
-      \item Still not \emph{too} terribly formal
-    \end{itemize}
   \end{itemize}
 \end{itemize}
 \end{frame}
