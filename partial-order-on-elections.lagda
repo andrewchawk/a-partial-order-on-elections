@@ -131,6 +131,10 @@ x < y = x ≤ y × ¬ (y ≈ x)
 _+_ : Op₂ Real
 _+_ = {!!}
 
+-- | Subtraction operation
+_-_ : Op₂ Real
+_-_ = {!!}
+
 -- | Exponentiation operation
 _^_ : Op₂ Real
 _^_ = {!!}
@@ -296,19 +300,23 @@ Candidate n = Vec Real n
 
 \subsubsection{Candidate Functions}
 
-\begin{frame}{The Candidate Radicality Function}
+\begin{frame}{The Candidate Difference Function}
 \begin{code}
-candidateRadicality : {n : ℕ} -> Candidate n -> Real0
-candidateRadicality =
-  sqrt ∘ Data.Vec.foldr _ _+'_ 0Real0 ∘ Data.Vec.map square
+candidateDifference :
+  {n : ℕ} -> Candidate n -> Candidate n -> Real0
+candidateDifference =
+  sqrt ∘₂
+   Data.Vec.foldr _ _+'_ 0Real0 ∘₂
+   Data.Vec.map (square ∘ uncurry _-_) ∘₂
+   Data.Vec.zip
 \end{code}
 
 \begin{itemize}
-  \item Really just absolute value
+  \item Fundamentally just the \(n\)-dimensional distance function
 \end{itemize}
 \end{frame}
 
-\begin{frame}{The \emph{Rest of} the Candidate Radicality Function}
+\begin{frame}{The \emph{Rest of} the Candidate Distance Function}
 \begin{code}
   where
   0Real0 =
@@ -319,21 +327,22 @@ candidateRadicality =
                                                   {0Real}))
     where ≤-preorder = IsPartialOrder.isPreorder ≤-partialOrder
   square : Real -> Real0
-  square = \ x -> (x ^ {- 2 -} {!!}) , {!!}
+  square x = (x ^ {- 2 -} {!!}) , {!!}
   sqrt : Real0 -> Real0
   sqrt (x , grt) = (x ^ {- 1/2 -} {!!}) , {!!}
   _+'_ = {!!}
 \end{code}
 \end{frame}
 
-\begin{frame}{The Candidate Difference Function}
+\begin{frame}{The Candidate Radicality Function}
 \begin{code}
-candidateDifference : {n : ℕ} -> Candidate n -> Candidate n -> Real0
-candidateDifference = {!!}
+candidateRadicality : {n : ℕ} -> Candidate n -> Real0
+candidateRadicality {n} =
+  candidateDifference (Data.Vec.replicate n 0Real)
 \end{code}
 
 \begin{itemize}
-  \item Fundamentally just the \(n\)-dimensional distance function
+  \item Really just absolute value
 \end{itemize}
 \end{frame}
 
