@@ -37,9 +37,15 @@
 \begin{document}
 \maketitle{}
 
+\begin{frame}{Abstract}
 \begin{abstract}
 Extensively using Agda, the author presents a method of not-quite-programmatically ordering elections by importance.  Along the way, the author expands on this notion of ``importance'' while trying to be too abstract to really favor any political party or the like or even be worth a listen.  Huzzah!  The academic's dream is realized yet again!
 \end{abstract}
+\end{frame}
+
+\section{Intent, Justification, and Such}
+
+\subsection{Intent}
 
 \begin{frame}{Intent}
 \begin{itemize}
@@ -58,12 +64,13 @@ Extensively using Agda, the author presents a method of not-quite-programmatical
     \end{itemize}
     \item Prove\ldots{}
     \begin{itemize}
-      \item That \AgdaFunction{\AgdaUnderscore{}≤I\AgdaUnderscore{}} actually constitutes a partial order relation
-      \item That \AgdaFunction{\AgdaUnderscore{}≤I\AgdaUnderscore{}} has the defined qualities
+      \item That \AgdaFunction{\AgdaUnderscore{}≤I\AgdaUnderscore{}} actually constitutes a partial order relation \emph{and} has the defined qualities
     \end{itemize}
   \end{itemize}
 \end{itemize}
 \end{frame}
+
+\subsection{Justification}
 
 \begin{frame}{Justification}
 \begin{itemize}
@@ -79,6 +86,8 @@ Extensively using Agda, the author presents a method of not-quite-programmatical
   \end{itemize}
 \end{itemize}
 \end{frame}
+
+\subsection{Such}
 
 \begin{frame}{Agda Imports and Such}
 \begin{code}
@@ -101,15 +110,15 @@ import Relation.Binary.PropositionalEquality as PropEqualityProps
 \end{code}
 \end{frame}
 
+\section{Base Types}
+
+\subsection{Real Numbers}
+
 \begin{frame}{Cop-Out ``Definitions'' for Real Numbers}
 \begin{code}
 -- Real number type
 Real : Set
 Real = {!!}
-
--- | Additive identity
-0Real : Real
-0Real = {!!}
 
 -- | Less-than-or-equal-to relation
 _≤_ : Rel Real Level.zero
@@ -127,6 +136,10 @@ x < y = x ≤ y × ¬ (y ≈ x)
 
 \begin{frame}{More Cop-Out ``Definitions''}
 \begin{code}
+-- | Additive identity
+0Real : Real
+0Real = {!!}
+
 -- | Sum operation
 _+_ : Op₂ Real
 _+_ = {!!}
@@ -151,6 +164,8 @@ _^_ = {!!}
 \end{code}
 \end{frame}
 
+\subsection{Nonnegative Real Numbers}
+
 \begin{frame}{Nonnegative Real Numbers}
 \begin{code}
 -- | Nonnegative real number type
@@ -170,7 +185,7 @@ pos = proj₁
 \end{itemize}
 \end{frame}
 
-\section{Base Types}
+\subsection{Election-Related Types}
 
 \begin{frame}{The Types of Types}
 \begin{itemize}
@@ -352,6 +367,8 @@ candidateEquality c1 c2 = pos (candidateDifference c1 c2) ≈ 0Real
 allInvolvedCandidates : {n : ℕ} -> Election {n} -> List (Candidate n)
 allInvolvedCandidates e = e
 \end{code}
+
+\subsection{For Real, Now}
 
 \begin{code}
 dumbPartialOrder1 :
